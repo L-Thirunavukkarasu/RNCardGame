@@ -88,7 +88,7 @@ const Home = () => {
             key={card.id} 
             card={card} 
             handleChoice={handleChoice} 
-            flipped={card?.matched === choiceOne?.matched || card?.matched === choiceTwo?.matched || card?.matched}
+            flipped={card === choiceOne || card === choiceTwo || card?.matched}
             disabled={disabled}
             />
           );

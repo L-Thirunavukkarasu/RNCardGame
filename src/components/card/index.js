@@ -17,9 +17,6 @@ const cardHeight = height / 5;
 
 // create a component
 const CardView = ({card, handleChoice, flipped, disabled}) => {
-
-
-
   const flipAnimation = useRef(new Animated.Value(0)).current;
   let flipRotation = 0;
   flipAnimation.addListener(({value}) => (flipRotation = value));
@@ -64,10 +61,16 @@ const CardView = ({card, handleChoice, flipped, disabled}) => {
     if (!disabled) {
       handleChoice(card);
       flipToFront();
-    } 
+    }
   };
 
-  
+  useEffect(() => {
+    if (flipped) {
+      flipToFront();
+    } else {
+      flipToBack();
+    }
+  }, [card?.matched, flipped]);
 
   return (
     <TouchableOpacity onPress={handleClick} style={styles.card_item}>
