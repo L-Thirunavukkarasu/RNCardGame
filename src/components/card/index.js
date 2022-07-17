@@ -18,8 +18,7 @@ const cardHeight = height / 5;
 // create a component
 const CardView = ({card, handleChoice, flipped, disabled}) => {
   const flipAnimation = useRef(new Animated.Value(0)).current;
-  let flipRotation = 0;
-  flipAnimation.addListener(({value}) => (flipRotation = value));
+  // flipAnimation.addListener(({value}) => (flipRotation = value));
 
   const flipToFrontStyle = {
     transform: [
@@ -64,10 +63,9 @@ const CardView = ({card, handleChoice, flipped, disabled}) => {
     }
   };
 
+  //flip card to back when the card is doesn't match
   useEffect(() => {
-    if (flipped) {
-      flipToFront();
-    } else {
+    if (!flipped) {
       flipToBack();
     }
   }, [card?.matched, flipped]);

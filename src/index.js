@@ -1,6 +1,6 @@
 //import liraries
 import React, {useState, useEffect} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity, Alert} from 'react-native';
 import * as Data from './data';
 import {Colors} from './assets/colors';
 import CardView from './components/card';
@@ -12,6 +12,7 @@ const Home = () => {
   const [choiceOne, setChoiceOne] = useState(null);
   const [choiceTwo, setChoiceTwo] = useState(null);
   const [disabled, setDisabled] = useState(false);
+  const [matchedCardCount, setMatchedCardCount] = useState(0);
 
   //shuffle cards
   const shuffleCards = () => {
@@ -38,7 +39,6 @@ const Home = () => {
     if (choiceOne && choiceTwo) {
       setDisabled(true);
       if (choiceOne.value === choiceTwo.value) {
-        console.log('cards  match');
         setCards(prevCards => {
           return prevCards.map(card => {
             if (card.value === choiceOne.value) {
@@ -48,9 +48,10 @@ const Home = () => {
             }
           });
         });
+        setMatchedCardCount(prevCount => prevCount + 1);
         resetSteps();
       } else {
-        console.log('cards not match',cards);
+        console.log('cards not match', cards);
         setTimeout(() => {
           resetSteps();
         }, 1000);
@@ -69,9 +70,20 @@ const Home = () => {
   };
 
   //start game automatically
-  useEffect(()=>{
+  useEffect(() => {
     shuffleCards();
-  },[])
+  }, []);
+
+  //show success alert and restart the game
+  useEffect(() => {
+    let cardsCount = cards?.length / 2;
+    if (matchedCardCount === cardsCount && steps > 0) {
+      Alert.alert('Congratulations!', `You won this game by ${steps} steps!`, [
+        {text: 'Try another round', onPress: () => shuffleCards()},
+      ]);
+      setMatchedCardCount(0);
+    }
+  }, [matchedCardCount]);
 
   return (
     <View style={styles.container}>
@@ -84,12 +96,14 @@ const Home = () => {
       <View style={styles.card_view}>
         {cards.map(card => {
           return (
-            <CardView 
-            key={card.id} 
-            card={card} 
-            handleChoice={handleChoice} 
-            flipped={card === choiceOne || card === choiceTwo || card?.matched}
-            disabled={disabled}
+            <CardView
+              key={card.id}
+              card={card}
+              handleChoice={handleChoice}
+              flipped={
+                card === choiceOne || card === choiceTwo || card?.matched
+              }
+              disabled={disabled}
             />
           );
         })}
