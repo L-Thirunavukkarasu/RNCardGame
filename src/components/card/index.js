@@ -1,7 +1,6 @@
 //import liraries
 import React, {useEffect, useRef} from 'react';
 import {
-  View,
   Text,
   StyleSheet,
   Dimensions,
@@ -11,14 +10,12 @@ import {
 import {Colors} from '../../assets/colors';
 
 const {width, height} = Dimensions.get('window');
-const cardPadding = width / 25;
 const cardWidth = width / 3 - 20;
 const cardHeight = height / 5;
 
 // create a component
 const CardView = ({card, handleChoice, flipped, disabled}) => {
   const flipAnimation = useRef(new Animated.Value(0)).current;
-  // flipAnimation.addListener(({value}) => (flipRotation = value));
 
   const flipToFrontStyle = {
     transform: [
@@ -41,6 +38,7 @@ const CardView = ({card, handleChoice, flipped, disabled}) => {
     ],
   };
 
+  //flip to front animation
   const flipToFront = () => {
     Animated.timing(flipAnimation, {
       toValue: 180,
@@ -48,6 +46,8 @@ const CardView = ({card, handleChoice, flipped, disabled}) => {
       useNativeDriver: true,
     }).start();
   };
+
+  //flip to back animation
   const flipToBack = () => {
     Animated.timing(flipAnimation, {
       toValue: 0,
@@ -56,6 +56,7 @@ const CardView = ({card, handleChoice, flipped, disabled}) => {
     }).start();
   };
 
+  //handle card on clicked event
   const handleClick = () => {
     if (!disabled) {
       handleChoice(card);
@@ -72,8 +73,7 @@ const CardView = ({card, handleChoice, flipped, disabled}) => {
 
   return (
     <TouchableOpacity onPress={handleClick} style={styles.card_item}>
-      <Animated.View
-        style={{...styles.card_front(flipped), ...flipToBackStyle}}>
+      <Animated.View style={{...styles.card_front, ...flipToBackStyle}}>
         <Text style={styles.card_value}>{card.value}</Text>
       </Animated.View>
       <Animated.View style={{...styles.card_back, ...flipToFrontStyle}}>
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginLeft: 10,
   },
-  card_front: flipped => ({
+  card_front: {
     borderRadius: 10,
     backgroundColor: Colors.white_bg,
     padding: 10,
@@ -100,10 +100,10 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     position: 'absolute',
-  }),
+  },
   card_back: {
     borderRadius: 10,
-    borderWidth: 5,
+    borderWidth: 4,
     borderColor: Colors.white_bg,
     backgroundColor: Colors.card_bg,
     padding: 10,

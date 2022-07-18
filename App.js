@@ -1,13 +1,13 @@
 //import liraries
-import React, { Component } from 'react';
-import { SafeAreaView, Text, StyleSheet } from 'react-native';
+import React from 'react';
+import { View, StyleSheet } from 'react-native';
 import Home from './src';
 // create a component
 const App = () => {
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <Home />
-    </SafeAreaView>
+    </View>
   );
 };
 

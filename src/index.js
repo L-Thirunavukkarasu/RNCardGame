@@ -18,7 +18,7 @@ const Home = () => {
   const shuffleCards = () => {
     //generate random numbers
     const CARD_PAIRS_VALUE = Data.getRandomNumbers();
-
+    //create shuffled cards array with unique id
     const shuffledCards = [...CARD_PAIRS_VALUE, ...CARD_PAIRS_VALUE]
       .sort(() => Math.random() - 0.5)
       .map(card => ({...card, id: Math.random()}));
@@ -91,7 +91,10 @@ const Home = () => {
         <TouchableOpacity onPress={shuffleCards}>
           <Text style={styles.option_restart}>Restart</Text>
         </TouchableOpacity>
-        <Text style={styles.option_steps}>{`Steps : ${steps}`}</Text>
+        <Text style={styles.option_steps}>
+          {'STEPS :'}
+          <Text style={styles.option_steps_count}> {`${steps}`}</Text>
+        </Text>
       </View>
       <View style={styles.card_view}>
         {cards.map(card => {
@@ -117,24 +120,30 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.light_black_bg,
+    paddingVertical:'10%',
   },
   top_options: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: 10,
-    paddingVertical: 10,
+    paddingTop:5
   },
   option_restart: {
     color: Colors.card_bg,
-    fontSize: 18,
+    fontSize: 19,
+    fontWeight: 'bold',
   },
   option_steps: {
     color: Colors.white_bg,
     fontSize: 21,
   },
+  option_steps_count: {
+    color: Colors.card_bg,
+    fontSize: 25,
+  },
   card_view: {
     flexWrap: 'wrap',
-    marginTop: 12,
+    marginTop: 5,
     marginHorizontal: 10,
     flexDirection: 'row',
   },
