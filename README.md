@@ -1,7 +1,6 @@
 # RNCardGame
 
-    Flip is a timed card memory game. Click the question mark blue cards to see what number they uncover and try to find the matching number underneath the other cards. 
-    Uncover two matching numbers at once to eliminate them from the game. Eliminate all cards as fast as you can to win the game.
+    RNCardGame is a timed card memory game. Click the question mark blue cards to see what number they uncover and try to find the matching number underneath the other     cards.Uncover two matching numbers at once to eliminate them from the game. Eliminate all cards as fast as you can to win the game.
     
     RNCardGame is open source, and available under a free-to-try license. 
     
